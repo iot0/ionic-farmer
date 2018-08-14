@@ -6,9 +6,10 @@ import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
+import { UsersPipe } from './users.pipe';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, UsersPipe],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),

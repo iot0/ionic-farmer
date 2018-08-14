@@ -1,27 +1,37 @@
-<ion-header>
+<!-- <ion-header>
     <ion-toolbar color='primary'>
-            <ion-buttons slot="start">
-                    <ion-back-button></ion-back-button>
-                  </ion-buttons>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
         <ion-title>Login</ion-title>
     </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
-<ion-content padding class="login-container">
-    <ion-card>
-        <ion-list>
-            <ion-item>
-                <ion-label position='floating'>Username</ion-label>
-                <ion-input type="text" [(ngModel)]='userName'></ion-input>
-            </ion-item>
+<ion-content>
+    <div class="login-container" padding>
+        <ion-card margin color='light'>
+            <ion-card-header>
+                <ion-text color="primary" >
+                    <h2> Login</h2>
+                </ion-text>
+            </ion-card-header>
+            <ion-card-content>
+                <ion-list color='light'>
+                    <ion-item lines="full" margin-bottom>
+                        <!-- <ion-label position='stacked'>Username</ion-label> -->
+                        <ion-input type="text" [(ngModel)]='userName' placeholder='Username'></ion-input>
+                    </ion-item>
 
-            <ion-item>
-                <ion-label position='floating'>Password</ion-label>
-                <ion-input type="password"></ion-input>
-            </ion-item>
-            <div padding>
-                <ion-button (click)='onLogin()' expand="block" color="primary">Sign In</ion-button>
-            </div>
-        </ion-list>
-    </ion-card>
+                    <ion-item margin-bottom>
+                        <!-- <ion-label position='stacked' >Password</ion-label> -->
+                        <ion-input type="password"  placeholder='Password'></ion-input>
+                    </ion-item>
+                    <div padding-top>
+                        <ion-button shape='round' (click)='onLogin()' expand="block" color="primary">Sign In</ion-button>
+                        <ion-button shape='round' (click)='onLogin()' expand="block" color="secondary">Cancel</ion-button>
+                    </div>
+                </ion-list>
+            </ion-card-content>
+        </ion-card>
+    </div>
 </ion-content>

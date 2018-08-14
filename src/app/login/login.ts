@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'login',
   templateUrl: 'login.html',
-  styleUrls: ['login.css']
+  styleUrls: ['login.scss']
 })
 export class LoginPage {
   userName:string;
@@ -13,7 +13,7 @@ export class LoginPage {
     if(this.userName==='admin'){
       this.router.navigate(["/admin"]);
     }else{
-      this.router.navigate(["/device-data"]);
+      this.router.navigate(["/user"]);
     }
   }
 }
