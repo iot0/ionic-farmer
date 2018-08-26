@@ -1,26 +1,24 @@
-<ion-header>
+<!-- <ion-header>
     <ion-toolbar color='primary'>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
         <ion-title>Login</ion-title>
     </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
-<ion-content padding>
-
-
-    <ion-list>
-
-        <ion-item>
-            <ion-label>Username</ion-label>
-            <ion-input type="text"></ion-input>
-        </ion-item>
-
-        <ion-item>
-            <ion-label>Password</ion-label>
-            <ion-input type="password"></ion-input>
-        </ion-item>
-    </ion-list>
-
-    <div padding>
-        <ion-button shape="round" color="primary" fill="outline">Sign In</ion-button>
+<ion-content>
+    <div class="form-container">
+        <div class="form-header-container">
+            <h2>Login</h2>
+        </div>
+        <div class="form-input-container">
+            <ion-input type="text" [(ngModel)]='user.UserName' placeholder='Username'></ion-input>
+            <ion-input type="password" [(ngModel)]='user.Password' placeholder='Password'></ion-input>
+        </div>
+        <div class="form-action-container">
+            <ion-button shape='round' (click)='onLogin()' expand="block" color="secondary" fill="outline">Sign In</ion-button>
+            <ion-button shape='round' (click)='onCancel()' expand="block" color="primary" fill="outline">Cancel</ion-button>
+        </div>
     </div>
 </ion-content>

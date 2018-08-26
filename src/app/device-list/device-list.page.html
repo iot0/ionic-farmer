@@ -1,0 +1,22 @@
+<ion-header>
+    <ion-toolbar color='primary'>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title>Device List</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content padding>
+    <ion-list>
+      <ion-item detail *ngFor="let user of users" [routerLink]="[{outlets:{'device-list':['/admin/tabs/device-info']}}]">
+        <ion-avatar slot="start">
+          <img src="/assets/user.png" />
+        </ion-avatar>
+        <ion-label>
+          <h2>{{user.UserName}}</h2>
+          <h3>Fill Status : {{FillStatuses[user.Devices[0].FillStatus]}}</h3>
+          <h3>Odor Status {{OdorStatuses[user.Devices[0].OdorStatus]}}</h3>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>

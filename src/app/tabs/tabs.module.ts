@@ -1,5 +1,4 @@
 import { IonicModule } from '@ionic/angular';
-import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -7,9 +6,13 @@ import { FormsModule } from '@angular/forms';
 import { TabsPageRoutingModule } from './tabs.router.module';
 
 import { TabsPage } from './tabs.page';
-import { ContactPageModule } from '../contact/contact.module';
 import { AboutPageModule } from '../about/about.module';
-import { HomePageModule } from '../home/home.module';
+import { DeviceDataPageModule } from '../device-data/device-data.module';
+import { DeviceListPageModule } from '../device-list/device-list.module';
+import { DeviceInfoPageModule } from '../device-info/device-info.module';
+import { RecycleFormPageModule } from '../recycle-form/recycle-form.module';
+import { ProductsPageModule } from '../products/products.module';
+import { OrdersPageModule } from '../orders/orders.module';
 
 @NgModule({
   imports: [
@@ -17,9 +20,13 @@ import { HomePageModule } from '../home/home.module';
     CommonModule,
     FormsModule,
     TabsPageRoutingModule,
-    HomePageModule,
+    DeviceDataPageModule,
+    DeviceListPageModule,
+    DeviceInfoPageModule,
     AboutPageModule,
-    ContactPageModule
+    RecycleFormPageModule,
+    OrdersPageModule,
+    ProductsPageModule
   ],
   declarations: [TabsPage]
 })

@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar color='primary'>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Sign Up</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <!--full name field-->
+    <ion-item-divider>
+      <ion-label>
+        <ion-text color="dark">
+          <h2>FULL NAME</h2>
+        </ion-text>
+      </ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <ion-input required type="text" placeholder="Renjith"></ion-input>
+    </ion-item>
+    <!--adhaar id field-->
+    <ion-item-divider>
+      <ion-label>
+        <ion-text color="dark">
+          <h2>ADHAAR NUMBER</h2>
+        </ion-text>
+      </ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <ion-input required type="text" placeholder="Adhaar No"></ion-input>
+    </ion-item>
+    <!--farm area field-->
+    <ion-item-divider>
+      <ion-label>
+        <ion-text color="dark">
+          <h2>FARM AREA (in Acre)</h2>
+        </ion-text>
+      </ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <ion-input required type="number" placeholder="1"></ion-input>
+    </ion-item>
+    <!--select agriculture items-->
+    <ion-item-divider>
+      <ion-label>
+        <ion-text color="dark">
+          <h2>CULTIVATING ITEMS</h2>
+        </ion-text>
+      </ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <ion-label>Items</ion-label>
+      <ion-select multiple="true" cancelText="Nah" okText="Okay!" placeholder="Selct from the list">
+        <ion-select-option value="bacon">Bacon</ion-select-option>
+        <ion-select-option value="olives">Black Olives</ion-select-option>
+        <ion-select-option value="xcheese">Extra Cheese</ion-select-option>
+        <ion-select-option value="peppers">Green Peppers</ion-select-option>
+        <ion-select-option value="mushrooms">Mushrooms</ion-select-option>
+        <ion-select-option value="onions">Onions</ion-select-option>
+        <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+        <ion-select-option value="pineapple">Pineapple</ion-select-option>
+        <ion-select-option value="sausage">Sausage</ion-select-option>
+        <ion-select-option value="Spinach">Spinach</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <!--address field-->
+    <ion-item-divider>
+      <ion-label>
+        <ion-text color="dark">
+          <h2>ADDRESS</h2>
+        </ion-text>
+      </ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <ion-textarea required type="text" placeholder="Ulloor , Trivandrum"></ion-textarea>
+    </ion-item>
+    <!--location from map field-->
+    <ion-item-divider>
+      <ion-label>
+        <ion-text color="dark">
+          <h2> LATITUDE AND LONGITUDE</h2>
+        </ion-text>
+        <p>Select from the map.</p>
+      </ion-label>
+      <ion-fab-button (click)='selectLocation()'>
+        <ion-icon name="compass"></ion-icon>
+      </ion-fab-button>
+    </ion-item-divider>
+    <ion-item>
+      <ion-input required type="text" placeholder="23.455,45.555" disabled></ion-input>
+    </ion-item>
+    <div padding>
+      <ion-button color="primary" expand="full" (click)='onRegister()'>Sign Up</ion-button>
+    </div>
+  </ion-list>
+</ion-content>

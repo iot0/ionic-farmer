@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar color='light'>
+    <ion-title>Select Location</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="danger" (click)='onClose()'>
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div *ngIf="loading">Loading...</div>
+    <google-maps [hidden]='loading' (onError)='onMapError($event)' (onSuccess)='onMapSuccess($event)'></google-maps>
+</ion-content>
