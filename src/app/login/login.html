@@ -8,30 +8,17 @@
 </ion-header> -->
 
 <ion-content>
-    <div class="login-container" padding>
-        <ion-card margin color='light'>
-            <ion-card-header>
-                <ion-text color="primary" >
-                    <h2> Login</h2>
-                </ion-text>
-            </ion-card-header>
-            <ion-card-content>
-                <ion-list color='light'>
-                    <ion-item lines="full" margin-bottom>
-                        <!-- <ion-label position='stacked'>Username</ion-label> -->
-                        <ion-input type="text" [(ngModel)]='userName' placeholder='Username'></ion-input>
-                    </ion-item>
-
-                    <ion-item margin-bottom>
-                        <!-- <ion-label position='stacked' >Password</ion-label> -->
-                        <ion-input type="password"  placeholder='Password'></ion-input>
-                    </ion-item>
-                    <div padding-top>
-                        <ion-button shape='round' (click)='onLogin()' expand="block" color="primary">Sign In</ion-button>
-                        <ion-button shape='round' (click)='onLogin()' expand="block" color="secondary">Cancel</ion-button>
-                    </div>
-                </ion-list>
-            </ion-card-content>
-        </ion-card>
+    <div class="form-container">
+        <div class="form-header-container">
+            <h2>Login</h2>
+        </div>
+        <div class="form-input-container">
+            <ion-input type="text" [(ngModel)]='user.UserName' placeholder='Username'></ion-input>
+            <ion-input type="password" [(ngModel)]='user.Password' placeholder='Password'></ion-input>
+        </div>
+        <div class="form-action-container">
+            <ion-button shape='round' (click)='onLogin()' expand="block" color="secondary" fill="outline">Sign In</ion-button>
+            <ion-button shape='round' (click)='onCancel()' expand="block" color="primary" fill="outline">Cancel</ion-button>
+        </div>
     </div>
 </ion-content>

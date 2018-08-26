@@ -1,12 +1,18 @@
 import { Component, OnInit } from "@angular/core";
 import { ActionSheetController, ModalController } from "@ionic/angular";
 import { ReportingFormComponent } from "../shared/components/reporting-form/reporting-form.component";
+import { FillStatus } from "../shared/models/fill-status";
+import { DeviceService } from "../shared/services";
+import { OdorStatus } from "../shared/models/odor-status";
 
-enum PollutionStatus {
-  Nothing = 1,
-  Safe,
-  Warning,
-  Danger
+class Sensor {
+  constructor(public ultraSonic:number,public mq2:number){}
+  get fillStatus(){
+      return this.ultraSonic<=50?FillStatus.Half:FillStatus.Full;
+  }
+  get odorStatus(){
+    return OdorStatus.Heavy;
+  }
 }
 
 @Component({
@@ -15,17 +21,37 @@ enum PollutionStatus {
   styleUrls: ["./device-data.page.scss"]
 })
 export class DeviceDataPage implements OnInit {
-  pollutionStatuses = PollutionStatus;
-  currentStatus = PollutionStatus.Nothing;
+  fillStatuses = FillStatus;
+  ip: string;
+  currentStatus = FillStatus.Nothing;
+  timeout;
+  sensor:Sensor;
+  constructor(public modalController: ModalController, private deviceService: DeviceService) { }
 
-  constructor(public modalController: ModalController) { }
+  ngOnInit() {
 
-  ngOnInit() {}
+  }
 
+  onSync() {
+    if (this.timeout) clearTimeout(this.timeout);
+    if (this.ip && this.ip.trim() != "") {
+
+      this.deviceService.sync(this.ip).subscribe((res: Sensor) => {
+        console.log(res);
+        if (res) {
+          this.sensor=new Sensor(res.ultraSonic,res.mq2);
+        }
+      })
+      let self = this;
+      this.timeout = setTimeout(() => {
+        self.onSync();
+      }, 2000)
+    }
+  }
   onChangeStatus() {
-    let value = this.currentStatus+1;
+    let value = this.currentStatus + 1;
 
-    if (value > 4) value = 1;
+    if (value > 3) value = 1;
 
     this.currentStatus = value;// this.pollutionStatuses[value];
   }

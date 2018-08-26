@@ -5,12 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { UsersPage } from './users.page';
+import { RecycleFormPage } from './recycle-form.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: UsersPage
+    component: RecycleFormPage
   }
 ];
 
@@ -21,6 +21,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [UsersPage]
+  declarations: [RecycleFormPage]
 })
-export class UsersPageModule {}
+export class RecycleFormPageModule {}

@@ -10,5 +10,6 @@
 </ion-header>
 
 <ion-content>
-  <google-maps></google-maps>
+    <div *ngIf="loading">Loading...</div>
+    <google-maps [hidden]='loading' (onError)='onMapError($event)' (onSuccess)='onMapSuccess($event)'></google-maps>
 </ion-content>

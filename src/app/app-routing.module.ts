@@ -9,15 +9,14 @@ const routes: Routes = [
     loadChildren: "./register/register.module#RegisterPageModule"
   },
   { path: "about", loadChildren: "./about/about.module#AboutPageModule" },
-  { path: "admin", loadChildren: "./admin/admin.module#AdminPageModule" },
-  { path: "users", loadChildren: "./users/users.module#UsersPageModule" },
   {
     path: "user",
     children: [
       { path: '', loadChildren: './tabs/tabs.module#TabsPageModule' },
     ]
   },
-  { path: "", pathMatch: "full", redirectTo: "home" }
+  { path: "", pathMatch: "full", redirectTo: "home" },  { path: 'orders', loadChildren: './orders/orders.module#OrdersPageModule' },
+
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -3,12 +3,13 @@ import {
   OnInit,
   ElementRef,
   Inject,
-  Renderer2
+  Renderer2,
+  Output,
+  EventEmitter
 } from "@angular/core";
 import { DOCUMENT } from "@angular/platform-browser";
 import { Plugins } from "@capacitor/core";
 import { environment } from "../../../../environments/environment";
-import { LoadingController, ToastController } from "@ionic/angular";
 
 const { Geolocation, Network } = Plugins;
 
@@ -23,42 +24,35 @@ export class GoogleMapsComponent implements OnInit {
   public markers: any[] = [];
   private mapsLoaded: boolean = false;
   private networkHandler = null;
+  @Output("onError") errorEvent:EventEmitter<string>=new EventEmitter<string>();
+  @Output("onSuccess") successEvent:EventEmitter<string>=new EventEmitter<string>();
+
   constructor(
     private renderer: Renderer2,
     private element: ElementRef,
-    @Inject(DOCUMENT) private _document,
-    public loadingController: LoadingController,
-    public toastController: ToastController
+    @Inject(DOCUMENT) private _document
   ) {
     this.apiKey = environment.googleMapApiKey;
   }
 
-  async ngOnInit() {
-    const loading =await this.presentLoading();
-    loading.present();
+  ngOnInit() {
+    if (window["google"]) {
+      this.initMap();
+    } else {
+        this.loadGoogleMap();
+    }
+  }
+
+  async loadGoogleMap() {
     this.init()
       .then(
         res => {
+          this.successEvent.emit("Map is ready");
           console.log("Google Maps ready.");
-          loading.dismiss();
         },
         err => {
-          loading.dismiss();
-          console.log(err);
-          this.presentToast("Error loading map ");
-        }
-      );
-  }
-
-  async presentToast(message) {
-    return await this.loadingController.create({
-      content: message
-    });
-  }
-  async presentLoading() {
-    return await this.loadingController.create({
-      content: "Loading..."
-    });
+          this.errorEvent.emit(err);
+        });
   }
 
   private init(): Promise<any> {
@@ -151,7 +145,12 @@ export class GoogleMapsComponent implements OnInit {
 
       let script = this.renderer.createElement("script");
       script.id = "googleMaps";
-
+      script.language = "javascript";
+      script.type = "text/javascript";
+      script.defer = true;
+      script.onerror = (error) => {
+        reject(true);
+      }
       if (this.apiKey) {
         script.src =
           "https://maps.googleapis.com/maps/api/js?key=" +
@@ -162,10 +161,13 @@ export class GoogleMapsComponent implements OnInit {
       }
 
       this.renderer.appendChild(this._document.body, script);
+      console.dir(script);
+
     });
   }
 
   private initMap(): Promise<any> {
+    console.log("Map init ");
     return new Promise((resolve, reject) => {
       Geolocation.getCurrentPosition().then(
         position => {
