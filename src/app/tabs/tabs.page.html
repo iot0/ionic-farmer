@@ -1,20 +1,17 @@
 <ion-tabs color='primary'>
-  <ion-tab label="Device" icon="home" href="/user/tabs/(device:device)">
+  <ion-tab label="Device" icon="home" href="/user/tabs/(device:device)" *ngIf='auth.isFarmer$|async'>
     <ion-router-outlet name="device"></ion-router-outlet>
   </ion-tab>
-  <ion-tab label="About" icon="information-circle" href="/user/tabs/(about:about)">
-    <ion-router-outlet name="about"></ion-router-outlet>
-  </ion-tab>
-  <ion-tab label="Device List" icon="information-circle" href="/user/tabs/(device-list:device-list)">
-    <ion-router-outlet name="device-list"></ion-router-outlet>
-  </ion-tab>
-  <ion-tab label="Recycle Form" icon="information-circle" href="/user/tabs/(recycle-form:recycle-form)">
-    <ion-router-outlet name="recycle-form"></ion-router-outlet>
-  </ion-tab>
-  <ion-tab label="Products" icon="information-circle" href="/user/tabs/(products:products)">
+  <!-- <ion-tab label="Add Product" icon="add" href="/user/tabs/(product-form:product-form)" *ngIf='auth.isFarmer$|async'>
+    <ion-router-outlet name="product-form"></ion-router-outlet>
+  </ion-tab> -->
+  <ion-tab label="Products" icon="apps" href="/user/tabs/(products:products)">
     <ion-router-outlet name="products"></ion-router-outlet>
   </ion-tab>
-  <ion-tab label="Orders" icon="information-circle" href="/user/tabs/(orders:orders)">
-    <ion-router-outlet name="orders"></ion-router-outlet>
+  <ion-tab label="Settings" icon="settings" href="/user/tabs/(settings:settings)">
+    <ion-router-outlet name="settings"></ion-router-outlet>
   </ion-tab>
+  <!-- <ion-tab label="About" icon="information-circle" href="/user/tabs/(about:about)" >
+    <ion-router-outlet name="about"></ion-router-outlet>
+  </ion-tab> -->
 </ion-tabs>

@@ -1,0 +1,46 @@
+<ion-card>
+  <div class="image-container">
+    <div *ngIf='!product.ImageUrl' class="image-placeholder"></div>
+    <img *ngIf='product.ImageUrl' [src]="product.ImageUrl" alt="">
+  </div>
+  <ion-card-header class="place-header">
+    <ion-card-title class="capitalize">{{product.Name}}</ion-card-title>
+    <app-ratings [rating]='product.AvgRatings'></app-ratings>
+    <ion-fab vertical="top" horizontal="end" edge (click)='addReview()'>
+      <ion-fab-button color='light'>
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </ion-card-header>
+  <ion-content>
+    <ng-container *ngIf='(data$|async) as res'>
+      <ng-container *ngIf='res.data;else notificationTemplate;'>
+        <ion-item *ngFor="let review of res.data">
+          <ion-label text-wrap>
+            <ion-text color="primary">
+              <h3>{{review.Review}}</h3>
+            </ion-text>
+            <p>by {{review.User.FullName}}</p>
+            <app-ratings [ratings]='review.Rating'></app-ratings>
+          </ion-label>
+        </ion-item>
+      </ng-container>
+      <ng-template #notificationTemplate>
+        <ng-container *ngIf='res.error||res.empty;else loadingTemplate;'>
+          <div class="item-center" [hidden]='!res.error'>
+            Something went wrong , Try again later .
+          </div>
+          <div class="item-center" [hidden]='!res.empty'>
+            <ng-content></ng-content>
+            <span *ngIf="!content">List is Empty !</span>
+          </div>
+        </ng-container>
+        <ng-template #loadingTemplate>
+          <div class="item-center">
+            <ion-spinner name="lines"></ion-spinner>
+          </div>
+        </ng-template>
+      </ng-template>
+    </ng-container>
+  </ion-content>
+</ion-card>

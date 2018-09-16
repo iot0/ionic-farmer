@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar color='secondary'>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      {{isFarmer?"Farmers":"Customer"}} List
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ng-container *ngIf='(data$|async) as res'>
+    <ng-container *ngIf='res.data;else notificationTemplate;'>
+      <ion-card *ngFor="let user of res.data">
+        <ion-item>
+          <ion-label text-wrap>
+            <ion-text color="primary">
+              <h1>Name : {{user.FullName}}</h1>
+            </ion-text>
+            <p>Ph : {{user.PhoneNumber}}</p>
+            <p>Email : {{user.EmailId}}</p>
+            <p *ngIf='"Farmer"===UserRoles[user.Role]'>AdhaarId : {{user.AdhaarId}}</p>
+            <p *ngIf='"Farmer"===UserRoles[user.Role]'>Address : {{user.Address}}</p>
+            <p *ngIf='"Farmer"===UserRoles[user.Role]'>LandArea : {{user.LandArea}} Acres</p>
+            <ion-text color='secondary'>
+              Joined At {{user.CreatedAt.toDate()|date}}
+            </ion-text>
+          </ion-label>
+        </ion-item>
+      </ion-card>
+    </ng-container>
+    <ng-template #notificationTemplate>
+      <ng-container *ngIf='res.error||res.empty;else loadingTemplate;'>
+        <div class="item-center" [hidden]='!res.error'>
+          Something went wrong , Try again later .
+        </div>
+        <div class="item-center" [hidden]='!res.empty'>
+          List is empty .
+        </div>
+      </ng-container>
+      <ng-template #loadingTemplate>
+        <div class="item-center">
+          <ion-spinner name="lines"></ion-spinner>
+        </div>
+      </ng-template>
+    </ng-template>
+  </ng-container>
+</ion-content>

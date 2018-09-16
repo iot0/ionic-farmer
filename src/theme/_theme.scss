@@ -17,6 +17,14 @@ $autumn: (
   medium: #FCD0A2,
   dark: #B89876
 );
+$custom: (
+  primary: #0b3101,
+  secondary: #F78154,
+  tertiary: #B4436C,
+  light: #FDE8DF,
+  medium: #FCD0A2,
+  dark: #B89876
+);
 $night: (
   primary: #8CBA80,
   secondary: #FCFF6C,
@@ -34,7 +42,7 @@ $neon: (
   dark: #34162A
 );
 
-$kh-theme:map-merge($default,$autumn);
+$kh-theme:map-merge($default,$custom);
 
 @function kh-theme($key) {
   @return map-get($kh-theme, $key);

@@ -4,11 +4,8 @@ import { RouterModule, Routes } from "@angular/router";
 import { TabsPage } from "./tabs.page";
 import { AboutPage } from "../about/about.page";
 import { DeviceDataPage } from "../device-data/device-data.page";
-import { DeviceListPage } from "../device-list/device-list.page";
-import { DeviceInfoPage } from "../device-info/device-info.page";
-import { RecycleFormPage } from "../recycle-form/recycle-form.page";
 import { ProductsPage } from "../products/products.page";
-import { OrdersPage } from "../orders/orders.page";
+import { SettingsPage } from "../settings/settings.page";
 
 const routes: Routes = [
   {
@@ -26,35 +23,25 @@ const routes: Routes = [
         component: AboutPage
       },
       {
-        path: "device-list",
-        outlet:"device-list",
-        component:DeviceListPage
-      },
-      {
-        path: "device-info",
-        outlet:"device-list",
-        component:DeviceInfoPage
-      },
-      {
-        path: "recycle-form",
-        outlet:"recycle-form",
-        component:RecycleFormPage
-      },
-      {
         path: "products",
         outlet:"products",
         component:ProductsPage
       },
       {
-        path: "orders",
-        outlet:"orders",
-        component:OrdersPage
+        path: "settings",
+        outlet: "settings",
+        component: SettingsPage
+      },
+      {
+        path: "",
+        redirectTo: "/user/tabs/(products:products)",
+        pathMatch: "full"
       }
     ]
   },
   {
     path: "",
-    redirectTo: "/user/tabs/(device:device)",
+    redirectTo: "/user/tabs/(products:products)",
     pathMatch: "full"
   }
 ];

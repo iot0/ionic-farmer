@@ -1,0 +1,29 @@
+<ion-header>
+    <ion-toolbar color='light'>
+      <ion-title>Select Location</ion-title>
+      <ion-buttons slot="end">
+        <ion-button color="danger" (click)='onClose()'>
+          <ion-icon slot="icon-only" name="close"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+      <ion-list>
+        <app-ratings (ratingClick)="onRating($event)"></app-ratings>
+          <ion-item-divider>
+            <ion-label>
+              <ion-text color="dark">
+                <h2>Review</h2>
+              </ion-text>
+            </ion-label>
+          </ion-item-divider>
+          <ion-item>
+            <ion-textarea #message required type="text" placeholder="Enter the message you want to attach with your current ppm value ."></ion-textarea>
+          </ion-item>
+          <div padding>
+            <ion-button color="primary" expand="full" (click)='onSubmit(message.value)'>Send</ion-button>
+          </div>
+        </ion-list>
+  </ion-content>

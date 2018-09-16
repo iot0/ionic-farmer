@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar color='secondary'>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Product Verification</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button color="end" (click)='presentPopover($event)'>
+        <ion-icon slot="icon-only" name="more"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <app-products [loadAll]='false'>
+    <span #content>
+      <span class="capitalize">{{currentStatus}}</span> list is Empty
+    </span>
+  </app-products>
+</ion-content>

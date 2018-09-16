@@ -1,0 +1,74 @@
+<ng-container *ngIf='(data$|async) as res'>
+  <ng-container *ngIf='res.data;else notificationTemplate;'>
+    <ion-card *ngFor="let product of res.data">
+      <div class="image-container">
+        <div *ngIf='!product.ImageUrl' class="image-placeholder"></div>
+        <img *ngIf='product.ImageUrl' [src]="product.ImageUrl" alt="">
+      </div>
+      <ion-card-header class="place-header">
+        <ion-card-title class="capitalize">{{product.Name}}</ion-card-title>
+        <ion-card-subtitle text-wrap>{{product.Description}}</ion-card-subtitle>
+        <p>Ph : {{product.PhoneNumber}}</p>
+        <p>Quantity :{{product.Quantity}} , Price :{{product.Price}}</p>
+        <p text-wrap>Address :{{product.Address}}</p>
+        <p> Created At {{product.createdAt.toDate()|date}}</p>
+        <ion-text [color]='product.Status==="approved"?"success":(product.Status==="rejected"?"danger":"dark")'>
+          Status :
+          <span class="capitalize"> {{product.Status}}</span>
+        </ion-text>
+
+        <ion-fab vertical="top" horizontal="end" edge>
+          <ion-fab-button color='light'>
+            <ion-icon name="more"></ion-icon>
+          </ion-fab-button>
+
+          <ion-fab-list side="top">
+            <ion-fab-button color='primary' (click)='openChats(product)' *ngIf='(authService.currentUser$|async)?.Id!==product.User.Id'>
+              <ion-icon name="mail"></ion-icon>
+            </ion-fab-button>
+          </ion-fab-list>
+
+          <ion-fab-list side="bottom">
+            <ion-fab-button [appLocation]='product.LatLng' color='secondary' (onSelect)='onLocationSelect($event)'>
+              <ion-icon name="compass"></ion-icon>
+            </ion-fab-button>
+          </ion-fab-list>
+          <ion-fab-list side="start">
+            <ion-fab-button (click)='onApprove(product)' color='success' *ngIf='product.Status!=="approved" && authService.isAdmin$|async'>
+              <ion-icon name="checkmark"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button (click)='onReject(product)' color='warning' *ngIf='product.Status!=="rejected" && authService.isAdmin$|async'>
+              <ion-icon name="close"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button [routerLink]='["/product-form",product.Id]' *ngIf='(authService.currentUser$|async)?.Id===product.User.Id'>
+              <ion-icon name="create"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button (click)='onDelete(product)' color='danger' *ngIf='(authService.currentUser$|async)?.Id===product.User.Id'>
+              <ion-icon name="trash"></ion-icon>
+            </ion-fab-button>
+          </ion-fab-list>
+        </ion-fab>
+      </ion-card-header>
+
+      <ion-card-content>
+        <app-ratings [rating]='product.AvgRatings' [routerLink]="['/re']"></app-ratings>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+  <ng-template #notificationTemplate>
+    <ng-container *ngIf='res.error||res.empty;else loadingTemplate;'>
+      <div class="item-center" [hidden]='!res.error'>
+        Something went wrong , Try again later .
+      </div>
+      <div class="item-center" [hidden]='!res.empty'>
+        <ng-content></ng-content>
+        <span *ngIf="!content">List is Empty !</span>
+      </div>
+    </ng-container>
+    <ng-template #loadingTemplate>
+      <div class="item-center">
+        <ion-spinner name="lines"></ion-spinner>
+      </div>
+    </ng-template>
+  </ng-template>
+</ng-container>

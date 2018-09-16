@@ -1,0 +1,15 @@
+:host /deep/ .action-btns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100px;
+
+  ion-button {
+    height: 100%;
+    width: 100%;
+
+    button {
+      height: 100%!important;
+      width: 100%!important;
+    }
+  }
+}

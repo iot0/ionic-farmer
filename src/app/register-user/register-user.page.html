@@ -1,0 +1,58 @@
+<ion-header>
+    <ion-toolbar color='primary'>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title>Register User</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <ion-list>
+      <form [formGroup]='registerForm' novalidate>
+          <ion-item-divider>
+              <ion-label>
+                <ion-text color="primary">
+                  <h2>FULL NAME</h2>
+                </ion-text>
+              </ion-label>
+            </ion-item-divider>
+            <ion-item>
+              <ion-input formControlName='fullName' type="text" placeholder="John Stone"></ion-input>
+            </ion-item>
+          <ion-item-divider>
+              <ion-label>
+                <ion-text color="primary">
+                  <h2>EMAIL ID</h2>
+                </ion-text>
+              </ion-label>
+            </ion-item-divider>
+            <ion-item>
+              <ion-input formControlName='emailId' type="text" placeholder="john@gmail.com"></ion-input>
+            </ion-item>
+          <ion-item-divider>
+              <ion-label>
+                <ion-text color="primary">
+                  <h2>PHONE NUMBER</h2>
+                </ion-text>
+              </ion-label>
+            </ion-item-divider>
+            <ion-item>
+              <ion-input formControlName='phoneNumber' type="text" placeholder="9989899899"></ion-input>
+            </ion-item>
+          <ion-item-divider>
+              <ion-label>
+                <ion-text color="primary">
+                  <h2>PASSWORD</h2>
+                </ion-text>
+              </ion-label>
+            </ion-item-divider>
+            <ion-item>
+              <ion-input formControlName='password' type="password" placeholder="password"></ion-input>
+            </ion-item>
+      </form>
+    </ion-list>
+  </ion-content>
+  <ion-footer>
+    <ion-button expand="full" (click)='onSave()'>Submit</ion-button>
+  </ion-footer>

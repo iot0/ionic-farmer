@@ -1,18 +1,20 @@
 import { Component, OnInit } from "@angular/core";
-import { ActionSheetController, ModalController } from "@ionic/angular";
+import {
+  ActionSheetController,
+  ModalController,
+  ToastController,
+  LoadingController
+} from "@ionic/angular";
 import { ReportingFormComponent } from "../shared/components/reporting-form/reporting-form.component";
 import { FillStatus } from "../shared/models/fill-status";
 import { DeviceService } from "../shared/services";
 import { OdorStatus } from "../shared/models/odor-status";
+import { catchError, tap, finalize, map } from "rxjs/operators";
+import { of } from "rxjs";
 
+const HUMIDITY_THRESHOLD = 500;
 class Sensor {
-  constructor(public ultraSonic:number,public mq2:number){}
-  get fillStatus(){
-      return this.ultraSonic<=50?FillStatus.Half:FillStatus.Full;
-  }
-  get odorStatus(){
-    return OdorStatus.Heavy;
-  }
+  constructor(public humidity: number, public ph: number) {}
 }
 
 @Component({
@@ -21,39 +23,85 @@ class Sensor {
   styleUrls: ["./device-data.page.scss"]
 })
 export class DeviceDataPage implements OnInit {
-  fillStatuses = FillStatus;
-  ip: string;
-  currentStatus = FillStatus.Nothing;
-  timeout;
-  sensor:Sensor;
-  constructor(public modalController: ModalController, private deviceService: DeviceService) { }
+  deviceData;
+  loading;
+  constructor(
+    public modalController: ModalController,
+    private deviceService: DeviceService,
+    public loadingController: LoadingController,
+    public toastController: ToastController
+  ) {}
 
-  ngOnInit() {
-
-  }
-
-  onSync() {
-    if (this.timeout) clearTimeout(this.timeout);
-    if (this.ip && this.ip.trim() != "") {
-
-      this.deviceService.sync(this.ip).subscribe((res: Sensor) => {
-        console.log(res);
-        if (res) {
-          this.sensor=new Sensor(res.ultraSonic,res.mq2);
-        }
-      })
-      let self = this;
-      this.timeout = setTimeout(() => {
-        self.onSync();
-      }, 2000)
+  ngOnInit() {}
+  // get checkThresholdOverflow() {
+  //   return this.humidity > 500;
+  // }
+  onSync(ip) {
+    if (ip) {
+      this.deviceService.sync(ip)
+      .pipe(catchError((err)=>{
+        this.presentToast("Something went worng");
+        return err;
+      }))
+      .subscribe(res => {
+        this.deviceData = res;
+      });
     }
   }
-  onChangeStatus() {
-    let value = this.currentStatus + 1;
 
-    if (value > 3) value = 1;
-
-    this.currentStatus = value;// this.pollutionStatuses[value];
+  updateMode(ip) {
+    const data={
+      ...this.deviceData,
+      intelligentMode:this.deviceData.intelligentMode == 0 ? 1 : 0
+    };
+    this.postStatus(ip, data).subscribe(res => {
+      if(res){
+        let message ="INTELLIGENT MODE : " + (data.intelligentMode == 1 ? "Enabled" : "Disabled");
+        this.presentToast(message);
+      }else this.presentToast("Something Went Wrong !.");
+    });
+  }
+  updateLampStatus(ip) {
+    const data={
+      ...this.deviceData,
+      lamp:this.deviceData.lamp == 0 ? 1 : 0
+    };
+    this.postStatus(ip, data).subscribe(res => {
+      if(res){
+        let message ="LAMP IS SWITCHED " + (data.lamp == 1 ? "ON" : " OFF ");
+        this.presentToast(message);
+      }else this.presentToast("Something Went Wrong !.");
+    });
+  }
+  updatePumpStatus(ip) {
+    const data={
+      ...this.deviceData,
+      pump:this.deviceData.pump == 0 ? 1 : 0
+    };
+    const status = this.deviceData.intelligentMode == 0 ? 1 : 0;
+    this.postStatus(ip, data).subscribe(res => {
+      if(res){
+        let message ="PUMP IS SWITCHED " + (data.pump == 1 ? "ON" : " OFF ");
+        this.presentToast(message);
+      }else this.presentToast("Something Went Wrong !.");
+    });
+  }
+  postStatus(ip, data) {
+    if (ip) {
+      const request = {
+        ...this.deviceData,
+        ...data
+      };
+      return this.deviceService.updateDeviceStatus(ip, request).pipe(
+        catchError(err => {
+          this.presentToast("Something Went Wrong !.");
+          return err;
+        }),
+        map(()=>{
+          return true;}),
+      );
+    }
+    return of(false);
   }
 
   async onReport() {
@@ -61,5 +109,22 @@ export class DeviceDataPage implements OnInit {
       component: ReportingFormComponent
     });
     return await modal.present();
+  }
+  async presentLoading(show) {
+    if (show) {
+      this.loading = await this.loadingController.create({
+        content: "Processing..."
+      });
+      return await this.loading.present();
+    } else if (this.loading) {
+      return await this.loading.dismiss();
+    }
+  }
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000
+    });
+    toast.present();
   }
 }

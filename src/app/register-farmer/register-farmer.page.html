@@ -1,0 +1,88 @@
+<ion-header>
+    <ion-toolbar color='primary'>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title>Farmer Registration</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <ion-list>
+      <form [formGroup]='registerForm' novalidate>
+          <ion-item-divider>
+              <ion-label>
+                <ion-text color="primary">
+                  <h2>FULL NAME</h2>
+                </ion-text>
+              </ion-label>
+            </ion-item-divider>
+            <ion-item>
+              <ion-input formControlName='fullName' type="text" placeholder="Ram charan"></ion-input>
+            </ion-item>
+          <ion-item-divider>
+              <ion-label>
+                <ion-text color="primary">
+                  <h2>EMAIL ID</h2>
+                </ion-text>
+              </ion-label>
+            </ion-item-divider>
+            <ion-item>
+              <ion-input formControlName='emailId' type="text" placeholder="ram@gmail.com"></ion-input>
+            </ion-item>
+          <ion-item-divider>
+              <ion-label>
+                <ion-text color="primary">
+                  <h2>PHONE NUMBER</h2>
+                </ion-text>
+              </ion-label>
+            </ion-item-divider>
+            <ion-item>
+              <ion-input formControlName='phoneNumber' type="text" placeholder="9989899899"></ion-input>
+            </ion-item>
+          <ion-item-divider>
+              <ion-label>
+                <ion-text color="primary">
+                  <h2>ADHAAR ID</h2>
+                </ion-text>
+              </ion-label>
+            </ion-item-divider>
+            <ion-item>
+              <ion-input formControlName='adhaarId' type="text" placeholder="Your adhaar id ."></ion-input>
+            </ion-item>
+          <ion-item-divider>
+              <ion-label>
+                <ion-text color="primary">
+                  <h2>LAND AREA</h2>
+                </ion-text>
+              </ion-label>
+            </ion-item-divider>
+            <ion-item>
+              <ion-input formControlName='landArea' type="text" placeholder=" 2 acres"></ion-input>
+            </ion-item>
+            <ion-item-divider>
+                <ion-label>
+                  <ion-text color="primary">
+                    <h2>ADDRESS</h2>
+                  </ion-text>
+                </ion-label>
+              </ion-item-divider>
+              <ion-item>
+                <ion-textarea formControlName='address' required type="text" placeholder="Ulloor , Trivandrum"></ion-textarea>
+              </ion-item>
+          <ion-item-divider>
+              <ion-label>
+                <ion-text color="primary">
+                  <h2>PASSWORD</h2>
+                </ion-text>
+              </ion-label>
+            </ion-item-divider>
+            <ion-item>
+              <ion-input formControlName='password' type="password" placeholder="password"></ion-input>
+            </ion-item>
+      </form>
+    </ion-list>
+  </ion-content>
+  <ion-footer>
+    <ion-button expand="full" (click)='onSave()'>Submit</ion-button>
+  </ion-footer>

@@ -2,10 +2,27 @@
   .home-container {
     height: 100%;
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--ion-color-primary);
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    background-color: #fff;
+
+    .logo{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-image: url("/assets/logo.jpeg");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      h1{
+        padding-top:20%;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        color:#fff;
+        font-size: 40px;
+      }
+    }
+    .home-bottom{
+      padding-top: 60px;
+    }
   }
 }

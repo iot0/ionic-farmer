@@ -1,0 +1,11 @@
+<ion-header>
+  <ion-toolbar color='primary'>
+    <ion-title>Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-button expand="full" routerLink='/chats/rooms' color='light'>Chats</ion-button>
+  <ion-button expand="full" (click)='askAdmin()' color='light'>Ask Admin</ion-button>
+  <ion-button expand="full" (click)='logOut()' color='secondary'>Log Out</ion-button>
+</ion-content>

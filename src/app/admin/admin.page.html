@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar color='primary'>
+    <ion-title>Admin Dashboard</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="admin-grid">
+    <div class="db-item" [routerLink]="['/verify-products']">
+      <ion-icon name="checkbox"></ion-icon>
+      <div class="db-label">
+        Verify Products
+      </div>
+    </div>
+    <!-- <div class="db-item">
+      <ion-icon name="checkbox"></ion-icon>
+      <div class="db-label">
+        Messages
+      </div>
+    </div> -->
+    <div class="db-item" [routerLink]="['/view-users/',getCustomerRole()]">
+      <ion-icon name="checkbox"></ion-icon>
+      <div class="db-label">
+        All Customers
+      </div>
+    </div>
+    <div class="db-item" [routerLink]="['/view-users/',getFarmerRole()]">
+      <ion-icon name="checkbox"></ion-icon>
+      <div class="db-label">
+        All Farmers
+      </div>
+    </div>
+    <div class="db-item" routerLink='/register-farmer'>
+      <ion-icon name="checkbox"></ion-icon>
+      <div class="db-label">
+        Add Farmer
+      </div>
+    </div>
+    <div class="db-item" (click)='logOut()'>
+      <ion-icon name="log-out"></ion-icon>
+      <div class="db-label">
+ Log Out
+      </div>
+    </div>
+  </div>
+</ion-content>

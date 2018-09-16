@@ -1,0 +1,50 @@
+<ion-header>
+
+  <ion-toolbar color='secondary'>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <ng-container *ngIf='authService.isAdmin$|async;else userTitleTemplate;'>
+      </ng-container>
+      <ng-template #userTitleTemplate>
+        Chats
+      </ng-template>
+    </ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ng-container *ngIf='(data$|async) as res'>
+    <ng-container *ngIf='res.data;else notificationTemplate;'>
+      <ion-list>
+        <ion-item *ngFor="let chatRoom of res.data" detail lines="full" [hidden]='!chatRoom.Product' (click)='openChat(chatRoom.PairId)'>
+          <ion-label text-wrap>
+            <ion-text color='dark'>
+              <h3>{{chatRoom?.Product?.Name}}</h3>
+            </ion-text>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ng-container>
+    <ng-template #notificationTemplate>
+      <ng-container *ngIf='res.error||res.empty;else loadingTemplate;'>
+        <div class="item-center" [hidden]='!res.error'>
+          Something went wrong , Try again later .
+        </div>
+        <div class="item-center" [hidden]='!res.empty'>
+          <ng-content></ng-content>
+          <span *ngIf="!content">No messages to display !</span>
+        </div>
+      </ng-container>
+      <ng-template #loadingTemplate>
+        <div class="item-center">
+          <ion-spinner name="lines"></ion-spinner>
+        </div>
+      </ng-template>
+    </ng-template>
+  </ng-container>
+
+</ion-content>

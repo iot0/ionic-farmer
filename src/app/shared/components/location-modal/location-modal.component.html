@@ -11,5 +11,8 @@
 
 <ion-content>
     <div *ngIf="loading">Loading...</div>
-    <google-maps [hidden]='loading' (onError)='onMapError($event)' (onSuccess)='onMapSuccess($event)'></google-maps>
+    <div khMaps [view]='marker' (onMarkerAdd)='onLocationSelect($event)' (mapInit)='onMapInit($event)'></div>
 </ion-content>
+<ion-footer *ngIf='enableSelection'>
+  <ion-button color='secondary' expand="full" (click)='onSelect()'>Select</ion-button>
+</ion-footer>

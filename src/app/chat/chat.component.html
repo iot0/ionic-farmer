@@ -1,0 +1,76 @@
+<ion-header>
+
+  <ion-toolbar color='secondary'>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <ng-container *ngIf='room.WithAdmin;else userTitleTemplate;'>
+        Ask Admin 
+      </ng-container>
+      <ng-template #userTitleTemplate>
+        Product :{{room?.Product.Name}}
+      </ng-template>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ng-container *ngIf='(data$|async) as res'>
+    <ng-container *ngIf='res.data;else notificationTemplate;'>
+      <ion-list>
+        <ion-item *ngFor="let chat of res.data" [hidden]='!chat.Message'>
+          <ng-container *ngIf='room.WithAdmin;else userMessageTemplate;'>  
+              <ion-label text-wrap>
+                  <ion-text [color]="isMine(chat)?'success':'danger'">
+                    <h3>{{messageFromTitle(chat)}}</h3>
+                  </ion-text>
+                  <p>{{chat.Message}}</p>
+                </ion-label>
+                <ion-note slot="end">{{chat.CreatedAt?(chat.CreatedAt.toDate()|date):""}}</ion-note>
+          </ng-container>
+          <ng-template #userMessageTemplate>
+              <ion-label text-wrap>
+                  <ion-text [color]="isMine(chat)?'success':'danger'">
+                    <h3>{{messageFromTitle(chat)}}</h3>
+                  </ion-text>
+                  <p>{{chat.Message}}</p>
+                </ion-label>
+                <ion-note slot="end">{{chat.CreatedAt?(chat.CreatedAt.toDate()|date):""}}</ion-note>
+          </ng-template>
+        </ion-item>
+      </ion-list>
+    </ng-container>
+    <ng-template #notificationTemplate>
+      <ng-container *ngIf='res.error||res.empty;else loadingTemplate;'>
+        <div class="item-center" [hidden]='!res.error'>
+          Something went wrong , Try again later .
+        </div>
+        <div class="item-center" [hidden]='!res.empty'>
+          <ng-content></ng-content>
+          <span *ngIf="!content">No messages to display !</span>
+        </div>
+      </ng-container>
+      <ng-template #loadingTemplate>
+        <div class="item-center">
+          <ion-spinner name="lines"></ion-spinner>
+        </div>
+      </ng-template>
+    </ng-template>
+  </ng-container>
+
+</ion-content>
+<ion-footer>
+  <ion-input type='text' placeholder='Type your message here.' #input></ion-input>
+  <ng-container *ngIf='(authService.isAdmin$|async);else userBtnTemplate;'>
+    <ion-fab-button color='primary' (click)='sendAdminMessage(input.value)'>
+      Submit
+    </ion-fab-button>
+  </ng-container>
+  <ng-template #userBtnTemplate>
+    <ion-fab-button color='primary' (click)='sendUserMessage(input.value)'>
+      Send
+    </ion-fab-button>
+  </ng-template>
+</ion-footer>

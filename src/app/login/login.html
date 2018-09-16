@@ -1,24 +1,15 @@
-<!-- <ion-header>
-    <ion-toolbar color='primary'>
-        <ion-buttons slot="start">
-            <ion-back-button></ion-back-button>
-        </ion-buttons>
-        <ion-title>Login</ion-title>
-    </ion-toolbar>
-</ion-header> -->
-
 <ion-content>
-    <div class="form-container">
+    <form [formGroup]='loginForm' novalidate class="form-container">
         <div class="form-header-container">
             <h2>Login</h2>
         </div>
         <div class="form-input-container">
-            <ion-input type="text" [(ngModel)]='user.UserName' placeholder='Username'></ion-input>
-            <ion-input type="password" [(ngModel)]='user.Password' placeholder='Password'></ion-input>
+            <ion-input type="text" formControlName='phoneNumber' placeholder='Phonenumber'></ion-input>
+            <ion-input type="password" formControlName='password' placeholder='Password'></ion-input>
         </div>
         <div class="form-action-container">
-            <ion-button shape='round' (click)='onLogin()' expand="block" color="secondary" fill="outline">Sign In</ion-button>
-            <ion-button shape='round' (click)='onCancel()' expand="block" color="primary" fill="outline">Cancel</ion-button>
+            <ion-button shape='round' (click)='onLogin()' expand="block" color="primary" fill="outline">Sign In</ion-button>
+            <ion-button shape='round' (click)='onCancel()' expand="block" color="danger" fill="outline">Cancel</ion-button>
         </div>
-    </div>
+    </form>
 </ion-content>

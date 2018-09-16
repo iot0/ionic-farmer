@@ -1,0 +1,25 @@
+:host {
+    .admin-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap:20px; 
+      height: 100%;
+      width: 100%;
+  
+      .db-item {
+        height: 150px;
+        display: flex;
+        background-color: #ccc;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding:20px;
+        .db-label{
+          margin-top:20px;
+          font-size:20px;
+        }
+      }
+    }
+  }
+  

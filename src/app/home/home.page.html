@@ -1,9 +1,18 @@
 <ion-content>
   <div class="home-container">
-    <div>
-      <ion-button margin shape="round" routerLink='/login' expand='block' color="light" fill="outline">Login</ion-button>
-      <ion-button margin shape="round" routerLink='/register' expand='block' color="light" fill="outline">Sign Up</ion-button>
-      <ion-button margin shape="round" routerLink='/about' expand='block' color="light" fill="outline">About Us</ion-button>
+    <div class="logo">
+      <h1>Right Grain</h1>
+    </div>
+    <div class="home-bottom">
+      <ng-container *ngIf='authService.isLoggedIn$|async;else loginTemplate;'>
+        <ion-button round expand='block' color="primary" (click)='authService.logOut()'>Logout</ion-button>
+        <ion-button *ngIf='!(authService.isAdmin$|async)' round expand='block' color="primary" routerLink='/user'>Home</ion-button>
+        <ion-button *ngIf='authService.isAdmin$|async' round expand='block' color="primary" routerLink='/admin'>Dashboard</ion-button>
+      </ng-container>
+      <ng-template #loginTemplate>
+        <ion-button margin shape="round" routerLink='/login' expand='block' color="primary" fill="outline">Login</ion-button>
+        <ion-button margin shape="round" routerLink='/register-user' expand='block' color="primary" fill="outline">Sign Up</ion-button>
+      </ng-template>
     </div>
   </div>
 </ion-content>

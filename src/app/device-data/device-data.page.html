@@ -19,27 +19,42 @@
     </ion-item>
 
     <ion-item>
-      <ion-input placeholder="192.168.0.1" [(ngModel)]="ip"></ion-input>
-      <ion-fab-button (click)='onSync()'>
+      <ion-input placeholder="192.168.0.1" #input></ion-input>
+      <ion-fab-button (click)='onSync(input.value)'>
         <ion-icon name="flash"></ion-icon>
       </ion-fab-button>
     </ion-item>
   </ion-list>
 
-  <div [ngSwitch]="sensor?.fillStatus">
-    <ion-card color='success' *ngSwitchCase='fillStatuses["Half"]' padding>
-      <h2>Less than 50% is filled </h2>
-      <h1>Odor is fine</h1>
-      <ion-button round fill="outline" color='light' (click)='onReport()'>Report</ion-button>
-    </ion-card>
-    <ion-card color='danger' *ngSwitchCase='fillStatuses["Full"]' padding>
-      <h2>More than 50% is filled </h2>
-      <h1>Odor is fine</h1>
-      <ion-button round fill="outline" color='light' (click)='onReport()'>Report</ion-button>
-    </ion-card>
-    <ion-card *ngSwitchDefault color='light' padding>
-      <h2>No value to display .</h2>
-      <h3>Try syncing your device again .</h3>
-    </ion-card>
+  <ion-card *ngIf='deviceData'>
+    <ion-card-header>
+      <h1 [hidden]='!(deviceData.lightIntensity<10)'>
+          Switch on the Light .
+      </h1>
+      <h1 [hidden]='!(deviceData.soilMoisture<20)'>
+          Switch on the Pump .
+      </h1>
+      <h3 [hidden]='deviceData.intelligentMode'>
+        Enable Intelligent mode if you want the device to adjust itself without your help .
+      </h3>
+    </ion-card-header>
+    <ion-card-content>
+      <h1>LIGHT INTENSITY :{{deviceData.lightIntensity}} %</h1>
+      <h1>SOIL MOISTURE : {{deviceData.soilMoisture}} %</h1>
+    </ion-card-content>
+  </ion-card>
+
+  <div class="action-btns" *ngIf='deviceData'>
+    <ion-button [color]="deviceData.pump==1?'success':'danger'" (click)='updatePumpStatus(input.value)'>
+      Pump is {{deviceData.pump==1?'ON':'OFF'}}
+    </ion-button>
+    <ion-button [color]="deviceData.lamp==1?'success':'danger'" (click)='updateLampStatus(input.value)'>
+      Lamp is {{deviceData.lamp==1?'ON':'OFF'}}
+    </ion-button>
   </div>
 </ion-content>
+<ion-footer *ngIf='deviceData'>
+  <ion-button expand="full" (click)='updateMode(input.value)' [color]="deviceData?.intelligentMode?'success':'danger'">
+    INTELLIGENT MODE IS {{deviceData.intelligentMode?' ON ':' OFF '}}
+  </ion-button>
+</ion-footer>

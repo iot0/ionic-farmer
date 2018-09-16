@@ -1,9 +1,17 @@
 <ion-header>
   <ion-toolbar color='primary'>
     <ion-title>Products</ion-title>
+    <ion-buttons slot="end" *ngIf="(auth.isFarmer$|async) || (auth.isAdmin$|async)">
+      <ion-button color="light" routerLink='/product-form'>
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>  
+  </ion-toolbar>
+  <ion-toolbar color='primary'>
+      <ion-searchbar animated="true"  (ionChange)='onSearch($event)' spellcheck='true'></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-
+    <app-products [loadAll]='!(auth.isFarmer$|async)' ></app-products>
 </ion-content>
